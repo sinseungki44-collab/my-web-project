@@ -1,1 +1,33 @@
 
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>오늘 뭐 먹지?</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#fff7ef;color:#33251f;font-family:Arial,"Malgun Gothic",sans-serif}main{max-width:900px;margin:auto;padding:24px 16px}header{text-align:center;padding:20px}h1{font-size:clamp(2rem,6vw,3.4rem);margin:0 0 8px}.panel{background:white;border:1px solid #efddce;border-radius:20px;padding:18px;margin-bottom:18px;box-shadow:0 8px 24px #5d321010}.controls{display:flex;gap:10px;flex-wrap:wrap}input,select,button{font:inherit;border-radius:11px;padding:12px;border:1px solid #e2d1c4}input{flex:1;min-width:190px}button{background:#b84c30;color:white;border:0;font-weight:bold;cursor:pointer}.secondary{background:#f1e4d8;color:#33251f}.result{display:grid;grid-template-columns:1fr 1fr;gap:18px}.photo{width:100%;height:250px;object-fit:cover;border-radius:14px;background:#f1e4d8}.tag{display:inline-block;background:#fff0e5;color:#a03f26;border-radius:20px;padding:6px 10px;margin-top:12px}.desc{line-height:1.7;color:#62564f}.actions{display:flex;gap:10px;flex-wrap:wrap}@media(max-width:620px){.result{grid-template-columns:1fr}.photo{height:220px}}
+</style>
+</head>
+<body><main>
+<header><h1>🍽️ 오늘 뭐 먹지?</h1><p>고민은 줄이고, 맛있는 한 끼를 골라보세요.</p></header>
+<section class="panel"><div class="controls">
+<input id="mood" placeholder="먹고 싶은 음식이나 기분을 입력하세요">
+<select id="weather" aria-label="날씨"><option value="sun">☀️ 맑은 날</option><option value="rain">🌧️ 비 오는 날</option><option value="cold">❄️ 쌀쌀한 날</option><option value="any">🎲 상관없어요</option></select>
+<button id="pick">메뉴 추천받기</button></div><p class="desc">예: 매콤한 음식, 혼밥, 든든한 점심. 비 오는 날에는 해물파전을 추천해요.</p></section>
+<section class="result">
+<article class="panel"><img id="photo" class="photo" alt="추천 음식 사진"><div id="tag" class="tag">오늘의 추천</div><h2 id="name">김치찌개</h2><p id="desc" class="desc"></p><div class="actions"><button id="again">다른 메뉴 보기</button><button id="copy" class="secondary">메뉴 복사하기</button></div></article>
+<article class="panel"><h2>🥢 오늘의 한 끼 팁</h2><p id="tip" class="desc"></p><hr style="border:0;border-top:1px solid #efddce"><h3>사용 방법</h3><p class="desc">1. 날씨를 고르세요.<br>2. 원하면 먹고 싶은 음식을 입력하세요.<br>3. 메뉴 추천받기를 누르세요.</p></article>
+</section><p style="text-align:center;color:#756960">오늘 뭐 먹지? · 맛있는 하루 보내세요 😊</p>
+</main>
+<script>
+const data={
+rain:[["해물파전 + 막걸리","비 오는 날엔 바삭한 해물파전과 따뜻한 대화가 잘 어울려요.","파전은 중불에서 천천히 익히면 가장자리가 바삭해져요.","https://images.unsplash.com/photo-1515003197210-e0cd7184f8b5?auto=format&fit=crop&w=1000&q=80"],["칼국수","따끈한 국물과 쫄깃한 면으로 든든하게 즐겨보세요.","겉절이를 곁들이면 맛이 더 살아나요.","https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=1000&q=80"]],
+sun:[["비빔밥","신선한 채소와 고추장을 비벼 먹는 산뜻한 한 끼예요.","참기름은 마지막에 살짝 둘러 향을 살려보세요.","https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=1000&q=80"],["돈가스","바삭한 튀김옷과 촉촉한 고기로 든든하게 즐겨보세요.","양배추 샐러드를 곁들이면 좋아요.","https://images.unsplash.com/photo-1606502973842-f64bc2785fe5?auto=format&fit=crop&w=1000&q=80"]],
+cold:[["순두부찌개","뜨끈하고 얼큰한 순두부찌개로 몸을 따뜻하게 해보세요.","계란을 마지막에 넣으면 부드러워요.","https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=80"],["설렁탕","깊고 담백한 국물에 밥을 말아 먹는 메뉴예요.","파와 후추를 취향껏 넣어보세요.","https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=1000&q=80"]],
+any:[["김치찌개","익숙하지만 언제 먹어도 든든한 한국인의 밥상 메뉴예요.","김치와 돼지고기를 먼저 볶으면 감칠맛이 좋아져요.","https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=80"],["불고기 덮밥","달콤짭짤한 불고기를 밥 위에 올려 간편하게 즐겨보세요.","양파와 버섯을 넣으면 더 맛있어요.","https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=1000&q=80"]]
+};
+let current;
+function choose(){let w=document.getElementById("weather").value,m=document.getElementById("mood").value.trim();let list=data[w]||data.any;if(/파전|막걸리|해물/.test(m))list=data.rain;else if(/국물|따뜻|얼큰|찌개|칼국수/.test(m))list=data.cold;else if(/고기|돈가스|불고기/.test(m))list=data.sun;current=list[Math.floor(Math.random()*list.length)];document.getElementById("name").textContent=current[0];document.getElementById("desc").textContent=current[1];document.getElementById("tip").textContent=current[2];document.getElementById("tag").textContent=w==="rain"?"비 오는 날 추천":"오늘의 추천";let img=document.getElementById("photo");img.onerror=()=>{img.onerror=null;img.src="data:image/svg+xml;charset=UTF-8,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="#f1e4d8"/><text x="50%" y="50%" text-anchor="middle" font-size="42" fill="#a03f26">맛있는 한 끼 🍲</text></svg>')};img.src=current[3]}
+document.getElementById("pick").onclick=choose;document.getElementById("again").onclick=choose;document.getElementById("copy").onclick=async()=>{try{await navigator.clipboard.writeText("오늘의 추천: "+current[0]);document.getElementById("copy").textContent="복사 완료!";}catch(e){prompt("메뉴를 복사하세요","오늘의 추천: "+current[0]);}};choose();
+</script></body></html>
